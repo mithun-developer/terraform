@@ -46,6 +46,11 @@ resource "aws_lambda_function" "hello_world" {
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
 }
 
+resource "aws_lambda_function_url" "hello_url" {
+  function_name      = aws_lambda_function.hello_world.function_name
+  authorization_type = "NONE" # Publicly accessible
+}
+
 resource "aws_apigatewayv2_api" "http_api" {
   name          = "hello-world-api"
   protocol_type = "HTTP"
